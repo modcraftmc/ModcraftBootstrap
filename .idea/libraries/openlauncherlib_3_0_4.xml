@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="openlauncherlib-3.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/ownCloud2/Dev/modcraftmc/Launcher/libs/openlauncherlib-3.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/ownCloud2/Dev/modcraftmc/Launcher/libs/s-update-3.1.0-BETA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
