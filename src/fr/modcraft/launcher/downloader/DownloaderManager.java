@@ -1,4 +1,4 @@
-package fr.modcraft.launcher.java;
+package fr.modcraft.launcher.downloader;
 
 import fr.modcraft.launcher.Bootstrap;
 import fr.modcraft.launcher.alert.AlertBuilder;

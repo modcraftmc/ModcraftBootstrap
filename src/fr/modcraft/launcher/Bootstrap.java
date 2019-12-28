@@ -1,7 +1,7 @@
 package fr.modcraft.launcher;
 
 import fr.modcraft.launcher.alert.AlertBuilder;
-import fr.modcraft.launcher.java.DownloaderManager;
+import fr.modcraft.launcher.downloader.DownloaderManager;
 import fr.modcraft.launcher.maintenance.MaintenanceManager;
 import fr.modcraft.launcher.utils.JavaUtils;
 import fr.theshark34.openlauncherlib.LaunchException;

@@ -1,4 +1,4 @@
-package fr.modcraft.launcher.java;
+package fr.modcraft.launcher.downloader;
 
 import javafx.concurrent.Task;
 
