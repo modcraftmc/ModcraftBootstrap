@@ -85,7 +85,6 @@ public class Bootstrap extends Application {
     private void initComponents(StackPane root) {
         progressBar.setPrefWidth(300);
         progressBar.setPrefHeight(30);
-        //progressBar.setTranslateY(15);
         progressBar.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
