@@ -10,4 +10,8 @@ public class JavaUtils {
         return System.getProperty("java.version");
     }
 
+    public static boolean is64Bits() {
+        return JavaUtils.getArchitecture().contains("64");
+    }
+
 }

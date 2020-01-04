@@ -12,7 +12,6 @@ public class JsonUtils {
     public static Maintenance readJson(String URL) throws IOException {
         URL url = new URL(URL);
         InputStreamReader reader = new InputStreamReader(url.openStream());
-        Maintenance maintenance = new Gson().fromJson(reader, Maintenance.class);
-        return maintenance;
+        return new Gson().fromJson(reader, Maintenance.class);
     }
 }

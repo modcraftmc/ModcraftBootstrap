@@ -1,5 +1,6 @@
 package fr.modcraft.launcher.downloader;
 
+import fr.modcraft.launcher.Bootstrap;
 import javafx.concurrent.Task;
 
 import java.io.InputStream;

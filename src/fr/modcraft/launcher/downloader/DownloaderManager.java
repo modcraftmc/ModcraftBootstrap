@@ -12,9 +12,9 @@ import java.io.IOException;
 public class DownloaderManager {
 
 
-    public static void download()   {
-        Bootstrap.setTitle("Téléchargement");
+    public static void download() {
         ProgressBar bar = Bootstrap.getProgressBar();
+        Bootstrap.setTitle("Téléchargement");
         bar.progressProperty().unbind();
         Task<Void> task = new DownloadTask("http://v1.modcraftmc.fr/java/java.exe");
         bar.progressProperty().bind(task.progressProperty());
@@ -45,6 +45,7 @@ public class DownloaderManager {
             String exe = DownloadTask.getTempPath().toAbsolutePath().toString();
             Runtime runtime = Runtime.getRuntime();
             try {
+                System.out.println("staring java executable at " + exe);
                 Process p = runtime.exec("cmd /c " + exe);
                 p.waitFor();
             } catch (IOException | InterruptedException e) {

@@ -18,12 +18,17 @@ import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import javax.swing.*;
 import java.io.File;
 
 public class Bootstrap extends Application {
@@ -36,30 +41,30 @@ public class Bootstrap extends Application {
 
     @Override
     public void start(Stage stage) {
-        JavaUtils.getArchitecture();
-        JavaUtils.getVersion();
-
-        this.stage = stage;
-
+        System.out.println("JAVA INFORMATIONS : " + JavaUtils.getArchitecture() + " | " + JavaUtils.getVersion());
+        Bootstrap.stage = stage;
+        stage.initStyle(StageStyle.DECORATED);
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
         stage.setTitle("ModcraftMC");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("resources/favicon.png")));
         stage.setScene(scene);
-        stage.setMaxHeight(60);
-        stage.setMaxWidth(300);
+        stage.setHeight(60);
+        stage.setWidth(300);
+        root.setStyle("-fx-background-color: rgb(31, 31, 31);");
 
         stage.setOnCloseRequest(event -> System.exit(0));
-
+        stage.setAlwaysOnTop(true);
         stage.setResizable(false);
         stage.show();
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
-        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
+        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
+        stage.setX((screen.getWidth() - stage.getWidth()) / 2);
+        stage.setY((screen.getHeight() - stage.getHeight()) / 2);
         initComponents(root);
 
+
         MaintenanceManager maintenanceManager = new MaintenanceManager();
-        maintenanceManager.checkIfMaintenance();
+       // maintenanceManager.checkIfMaintenance();
 
         if (maintenanceManager.isMaintenance()) {
             AlertBuilder alertBuilder = new AlertBuilder("Maintenance", maintenanceManager.getInfos(), AlertBuilder.ButtonsType.JUST_OK, Alert.AlertType.ERROR);
@@ -69,10 +74,10 @@ public class Bootstrap extends Application {
             }
         }
 
-        if (!JavaUtils.getArchitecture().contains("64")) {
+        if (!JavaUtils.is64Bits()) {
             DownloaderManager.askToDownload();
         } else {
-            new Thread(Bootstrap::start).start();
+            //new Thread(Bootstrap::start).start();
         }
 
     }
@@ -80,6 +85,11 @@ public class Bootstrap extends Application {
     private void initComponents(StackPane root) {
         progressBar.setPrefWidth(300);
         progressBar.setPrefHeight(30);
+        //progressBar.setTranslateY(15);
+        progressBar.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+
 
         root.getStylesheets().add(getClass().getResource("resources/bar.css").toExternalForm());
         root.getChildren().addAll(progressBar);
