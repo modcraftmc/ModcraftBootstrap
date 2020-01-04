@@ -77,7 +77,7 @@ public class Bootstrap extends Application {
         if (!JavaUtils.is64Bits()) {
             DownloaderManager.askToDownload();
         } else {
-            //new Thread(Bootstrap::start).start();
+            new Thread(Bootstrap::start).start();
         }
 
     }
