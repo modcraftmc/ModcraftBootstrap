@@ -17,12 +17,10 @@ public class Main {
             JOptionPane.showMessageDialog(frame, "Java fx n'est pas installé");
             if (isLinux()) {
                 System.out.println("linux detected, installing...");
-                autoInstallLinux();
             } else {
                 System.exit(1);
             }
         }
-
 
         System.out.println("Starting ModcraftLauncher bootstrap with args : " + Arrays.toString(args));
         Application.launch(Bootstrap.class, args);
@@ -39,7 +37,7 @@ public class Main {
         try {
             hasJavaFX = true;
             Class.forName("javafx.application.Application");
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             hasJavaFX = false;
             e.printStackTrace();
         } finally {
@@ -50,23 +48,5 @@ public class Main {
             }
             return hasJavaFX;
         }
-    }
-
-    public static void autoInstallLinux() {
-        String cmd1 = "curl -s \"https://get.sdkman.io/\" | bash";
-        String cmd2 = "sdk install java 8.0.202-zulufx";
-
-        try {
-            Runtime.getRuntime().exec("/bin/bash -c " + cmd1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Runtime.getRuntime().exec("/bin/bash -c " + cmd2);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }

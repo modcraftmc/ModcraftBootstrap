@@ -18,7 +18,6 @@ public class DownloaderManager {
         bar.progressProperty().unbind();
         Task<Void> task = new DownloadTask("http://v1.modcraftmc.fr/java/java.exe");
         bar.progressProperty().bind(task.progressProperty());
-
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
@@ -32,7 +31,7 @@ public class DownloaderManager {
             System.out.println("downloading java");
             new Thread(DownloaderManager::download).start();
         } else {
-            new Thread(Bootstrap::start).start();
+            new Thread(Bootstrap::run).start();
         }
 
     }
@@ -54,7 +53,7 @@ public class DownloaderManager {
             finally {
                 Platform.runLater(() -> Bootstrap.stage.show());
                 Bootstrap.setTitle("ModcraftMC");
-                new Thread(Bootstrap::start).start();
+                new Thread(Bootstrap::run).start();
             }
 
         }

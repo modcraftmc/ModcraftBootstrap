@@ -20,6 +20,7 @@ public class MaintenanceManager {
 
         } catch (IOException e) {
             e.printStackTrace();
+            maintenance = true;
         }
 
     }

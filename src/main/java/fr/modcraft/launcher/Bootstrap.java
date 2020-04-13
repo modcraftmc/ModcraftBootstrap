@@ -18,17 +18,14 @@ import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import javax.swing.*;
 import java.io.File;
 
 public class Bootstrap extends Application {
@@ -47,11 +44,10 @@ public class Bootstrap extends Application {
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
         stage.setTitle("ModcraftMC");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("resources/favicon.png")));
+        stage.getIcons().add(new Image(ClassLoader.getSystemClassLoader().getResourceAsStream("favicon.png")));
         stage.setScene(scene);
         stage.setHeight(60);
         stage.setWidth(300);
-        root.setStyle("-fx-background-color: rgb(31, 31, 31);");
 
         stage.setOnCloseRequest(event -> System.exit(0));
         stage.setAlwaysOnTop(true);
@@ -64,7 +60,7 @@ public class Bootstrap extends Application {
 
 
         MaintenanceManager maintenanceManager = new MaintenanceManager();
-       // maintenanceManager.checkIfMaintenance();
+        maintenanceManager.checkIfMaintenance();
 
         if (maintenanceManager.isMaintenance()) {
             AlertBuilder alertBuilder = new AlertBuilder("Maintenance", maintenanceManager.getInfos(), AlertBuilder.ButtonsType.JUST_OK, Alert.AlertType.ERROR);
@@ -77,9 +73,8 @@ public class Bootstrap extends Application {
         if (!JavaUtils.is64Bits()) {
             DownloaderManager.askToDownload();
         } else {
-            new Thread(Bootstrap::start).start();
+            new Thread(Bootstrap::run).start();
         }
-
     }
 
     private void initComponents(StackPane root) {
@@ -88,14 +83,11 @@ public class Bootstrap extends Application {
         progressBar.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-
-
-        root.getStylesheets().add(getClass().getResource("resources/bar.css").toExternalForm());
+        root.getStylesheets().add(ClassLoader.getSystemClassLoader().getResource("bar.css").toExternalForm());
         root.getChildren().addAll(progressBar);
     }
 
-
-    public static void start() {
+    public static void run() {
 
         try {
             doUpdate();
@@ -122,6 +114,7 @@ public class Bootstrap extends Application {
         ClasspathConstructor constructor = new ClasspathConstructor();
 
         ExploredDirectory gameDir = Explorer.dir(DIR);
+
         constructor.add(gameDir.get("launcher.jar"));
         ExternalLaunchProfile profile = new ExternalLaunchProfile("fr.modcraft.launcher.ModcraftLauncher", constructor.make());
         ExternalLauncher launcher = new ExternalLauncher(profile);
@@ -130,8 +123,7 @@ public class Bootstrap extends Application {
         try {
             Platform.runLater(() -> Bootstrap.stage.hide());
             p.waitFor();
-        } catch (InterruptedException localInterruptedException) {
-
+        } catch (InterruptedException ignored) {
         }
         System.exit(0);
     }
